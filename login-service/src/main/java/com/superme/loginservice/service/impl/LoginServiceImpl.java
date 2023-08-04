@@ -41,9 +41,11 @@ public class LoginServiceImpl implements LoginService {
      */
     @Override
     public Result<Object> login(LoginUser user) {
+        //参数校验
         ParameterCheckUtil.checkNull(user, "登录信息为空");
         ParameterCheckUtil.checkNull(user.getUsername(), "用户名不能为空");
         ParameterCheckUtil.checkNull(user.getPassword(), "密码不能为空");
+        //查询登录用户
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(User::getName, user.getUsername());
         User userInfo = userMapper.selectOne(queryWrapper);

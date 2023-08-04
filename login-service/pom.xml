@@ -52,7 +52,8 @@
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
-            <version>4.2.2</version>
+            <!--            g该版本SpringBoot默认jedis3.3.0-->
+            <!--高版本的jedis会与spring-boot-starter-data-redis出现版本不兼容问题,4.x以上不兼容springboot2.x-->
         </dependency>
         <!--        sa-token登录认证-->
         <dependency>

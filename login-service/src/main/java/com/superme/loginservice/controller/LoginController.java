@@ -5,8 +5,10 @@ import com.superme.loginservice.pojo.Entity.User;
 import com.superme.loginservice.pojo.qo.LoginUser;
 import com.superme.loginservice.service.LoginService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -35,8 +37,18 @@ public class LoginController {
     /**
      * 登录
      */
+    @PostMapping("doLogin")
     public Result<Object> login(LoginUser user) {
        return loginService.login(user);
+    }
+
+    @Resource
+    private Jedis jedis;
+
+    @GetMapping("testJedis")
+    public String test(String str) {
+        String test = jedis.set(str, "测试jedis");
+        return test;
     }
 
 }

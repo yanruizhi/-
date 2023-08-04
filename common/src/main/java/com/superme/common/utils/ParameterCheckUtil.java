@@ -1,6 +1,7 @@
 package com.superme.common.utils;
 
 
+import com.superme.common.beans.PageRequest;
 import com.superme.common.enums.ExceptionCodeEnum;
 import com.superme.common.exceptions.ParameterException;
 import org.springframework.util.ObjectUtils;
@@ -88,14 +89,13 @@ public class ParameterCheckUtil {
     /**
      * 校检分页参数
      * @param page 分页信息
-     * @param 分页参数异常
      */
-//    public static void checkPage(PageRequest page) {
-//        if (page == null || ObjectUtils.isEmpty(page.getPageSize()) || ObjectUtils.isEmpty(page.getCurrentPage())) {
-//            throw new ParameterException("分页参数异常");
-//        }
-//        if (page.getPageSize() <= 0 || page.getCurrentPage() <= 0) {
-//            throw new ParameterException("分页参数异常");
-//        }
-//    }
+    public static void checkPage(PageRequest page) {
+        if (page == null || ObjectUtils.isEmpty(page.getPageSize()) || ObjectUtils.isEmpty(page.getCurrentPage())) {
+            throw new ParameterException("分页参数异常");
+        }
+        if (page.getPageSize() <= 0 || page.getCurrentPage() <= 0) {
+            throw new ParameterException("分页参数异常");
+        }
+    }
 }
