@@ -1,6 +1,7 @@
 package com.superme.filemanager.controller;
 
 import com.superme.common.beans.Result;
+import com.superme.filemanager.service.FileService;
 import com.superme.filemanager.utils.FileUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
@@ -21,6 +23,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * FileController
@@ -28,7 +31,26 @@ import java.util.HashMap;
  * 时间: 2023/7/31 9:42
  */
 @RestController
+@RequestMapping("file")
 public class FileController {
+    @Resource
+    private FileService fileService;
+
+    /**
+     * 单文件上传
+     */
+    @PostMapping("upload/single")
+    public Result<Object> uploadSingle(MultipartFile file, String description) {
+        return fileService.uploadSingle(file, description);
+    }
+
+    /**
+     * 多文件上传
+     */
+    @PostMapping("upload/multi")
+    public Result<Object> uploadMulti(List<MultipartFile> files, String description) {
+        return fileService.uploadMulti(files, description);
+    }
 
     /**
      * Java普通方式--上传文件
@@ -41,7 +63,7 @@ public class FileController {
      * @throws IOException
      * @throws ServletException
      */
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    @RequestMapping(value = "/upload/up", method = RequestMethod.POST)
     @ResponseBody
     public String readFile(HttpServletRequest request, @RequestParam("name") String name, @RequestPart("file1") MultipartFile file3, @RequestPart("photo") MultipartFile photo) throws IOException, ServletException {
 
@@ -59,7 +81,7 @@ public class FileController {
         photo.transferTo(new File(path + photo.getOriginalFilename()));
         //
         //        第二种 ：  使用 MultipartFile 字节流保存文件
-        FileUtil.fileUtil(file3, String.valueOf(path));
+        FileUtil.save(file3, String.valueOf(path));
         //
         //		第三种 ：  使用 Part 接收文件字节流
         Part file2 = request.getPart("file2");

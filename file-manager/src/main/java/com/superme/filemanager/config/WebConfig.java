@@ -2,6 +2,7 @@ package com.superme.filemanager.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -19,5 +20,11 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowCredentials(true)
                 .allowedMethods("GET", "POST", "DELETE", "PUT")
                 .maxAge(3600);
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+
+        WebMvcConfigurer.super.addInterceptors(registry);
     }
 }

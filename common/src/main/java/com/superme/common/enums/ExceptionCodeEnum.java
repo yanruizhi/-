@@ -18,6 +18,8 @@ public enum ExceptionCodeEnum {
     AUTHENTICATION_FAILED("3001", "认证失败"),
     ACCESS_DENIED("3002", "鉴权异常"),
 
+    //文件上传下载异常
+    FILE_EXCEPTION("4000", "文件IO异常"),
     ;
 
     private String code;

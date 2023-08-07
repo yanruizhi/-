@@ -32,7 +32,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseBody
     public Result handleException(Exception e, HttpServletRequest request) {
         log.error("url {}, msg {}", request.getRequestURL(), e);
-        return Result.error("-1",e.getMessage());
+        return Result.error( e.getMessage());
     }
 
     //登录异常处理
@@ -40,6 +40,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseBody
     public Result handleException(LoginException e, HttpServletRequest request) {
         log.error("url {}, msg {}", request.getRequestURL(), e);
-        return Result.error("-1",e.getMessage());
+        return Result.error(e.getCode(), e.getMessage());
+    }
+
+    //文件异常处理
+    @ExceptionHandler(value = FileException.class)
+    @ResponseBody
+    public Result handleException(FileException e, HttpServletRequest request) {
+        log.error("url {}, msg {}", request.getRequestURL(), e);
+        return Result.error(e.getCode(), e.getMessage());
     }
 }
