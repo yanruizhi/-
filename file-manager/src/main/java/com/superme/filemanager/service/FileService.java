@@ -3,6 +3,8 @@ package com.superme.filemanager.service;
 import com.superme.common.beans.Result;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -19,4 +21,8 @@ public interface FileService {
      * 多文件上传
      */
     Result<Object> uploadMulti(List<MultipartFile> files, String description);
+    /**
+     * 下载文件
+     */
+    Result<Object> download(String id, HttpServletResponse response) throws IOException;
 }

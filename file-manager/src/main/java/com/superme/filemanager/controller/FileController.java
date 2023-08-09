@@ -4,6 +4,7 @@ import com.superme.common.beans.Result;
 import com.superme.filemanager.service.FileService;
 import com.superme.filemanager.utils.FileUtil;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -50,6 +52,14 @@ public class FileController {
     @PostMapping("upload/multi")
     public Result<Object> uploadMulti(List<MultipartFile> files, String description) {
         return fileService.uploadMulti(files, description);
+    }
+
+    /**
+     * 下载文件
+     */
+    @GetMapping("download/{id}")
+    public Result<Object> download(@PathVariable String id, HttpServletResponse response) throws IOException {
+        return fileService.download(id, response);
     }
 
     /**

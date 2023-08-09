@@ -17,6 +17,7 @@ spring:
         #区分统一环境下的不同项目组
         group: myApp
       config:
+        name: gateway
         server-addr: 192.168.100.128:8848
         cluster-name: 合肥
         namespace: ab3be6d5-2946-4a24-af84-be6dc2bc5ffe

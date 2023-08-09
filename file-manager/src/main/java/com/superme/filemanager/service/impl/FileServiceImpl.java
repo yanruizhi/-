@@ -1,20 +1,23 @@
 package com.superme.filemanager.service.impl;
 
 import com.superme.common.beans.Result;
+import com.superme.common.exceptions.FileException;
 import com.superme.common.utils.ParameterCheckUtil;
 import com.superme.filemanager.mapper.FileMapper;
 import com.superme.filemanager.pojo.Entity.FileInfo;
 import com.superme.filemanager.service.FileService;
 import com.superme.filemanager.utils.FileUtil;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.BufferedOutputStream;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -45,6 +48,11 @@ public class FileServiceImpl implements FileService {
         if (!dir.isDirectory()) {
             dir.mkdirs();
         }
+        //判断文件是否存在.不存在则保存
+        File exist = new File(dir + "/" + originalFilename);
+        if (exist.exists()) {
+            throw new FileException("文件已存在,请更换文件名或删除原文件");
+        }
         //保存文件
         String save = FileUtil.save(file, savePath);
         //储存文件信息
@@ -66,5 +74,39 @@ public class FileServiceImpl implements FileService {
         ParameterCheckUtil.checkNull(files, "文件列表为空,请上传文件");
         files.forEach(file -> this.uploadSingle(file, description));
         return Result.OK("上传成功");
+    }
+
+    /**
+     * 下载文件
+     */
+    @Override
+    public Result<Object> download(String id, HttpServletResponse response) throws IOException {
+        ParameterCheckUtil.checkNull(id, "文件id不能为空");
+        //查询文件信息
+        FileInfo fileInfo = fileMapper.selectById(id);
+        ParameterCheckUtil.checkNull(fileInfo, "文件信息不存在,请刷新后再试");
+        String url = fileInfo.getUrl();
+        ParameterCheckUtil.checkNull(url, "url信息为空,文件信息数据异常");
+        File file = new File(url);
+        if (!file.exists() || file.isDirectory()) {
+            throw new FileException();
+        }
+        try (FileInputStream fileInputStream = new FileInputStream(file);
+             ServletOutputStream outputStream = response.getOutputStream()) {
+//            response.setContentType("application/octet-stream");
+            response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);//以文件形式返回浏览器,否则浏览器悔自动解析一些能打开的格式
+            // 如果文件名为中文需要设置编码
+            response.setHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(fileInfo.getName(), "utf8"));
+            // 返回前端文件名需要添加
+            response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
+
+
+            byte[] bytes = new byte[1024*8];
+            int len;
+            while ((len = fileInputStream.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, len);
+            }
+        }
+        return Result.OK();
     }
 }
