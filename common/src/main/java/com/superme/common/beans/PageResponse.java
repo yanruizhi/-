@@ -1,5 +1,6 @@
 package com.superme.common.beans;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageInfo;
 import lombok.Data;
 
@@ -34,7 +35,14 @@ public class PageResponse<T> implements Serializable {
         this.currentPage = page.getPageNum();
         this.pageSize = page.getSize();
         this.totalCount = page.getTotal();
-//        this.totalPage = (page.getTotal() % page.getSize() == 0 ? page.getTotal() / page.getSize() : page.getTotal() / page.getSize() + 1);
+        this.totalPage = page.getPages();
+    }
+
+    public PageResponse(Page<T> page) {
+        this.list = page.getRecords();
+        this.currentPage = page.getCurrent();
+        this.pageSize = page.getSize();
+        this.totalCount = page.getTotal();
         this.totalPage = page.getPages();
     }
 }

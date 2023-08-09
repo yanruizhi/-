@@ -1,5 +1,7 @@
 package com.superme.filemanager.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.superme.common.beans.PageRequest;
@@ -32,19 +34,19 @@ import java.util.List;
 @Service
 public class FileServiceImpl implements FileService {
 
-    private final String basePath = System.getProperty("user.dir")+"/file"; //jar包所在目录
+    private final String basePath = System.getProperty("user.dir") + "/file"; //jar包所在目录下新建文件夹file
 
     @Resource
     private FileMapper fileMapper;
+
     /**
      * 查询文件列表
      */
     @Override
     public Result<PageResponse<FileInfo>> getPage(PageRequest page) {
         ParameterCheckUtil.checkPage(page);
-        PageHelper.startPage(page.getCurrentPage(), page.getPageSize());
-        List<FileInfo> fileInfos = fileMapper.selectList(null);
-        return Result.OK(new PageResponse<>(new PageInfo<>(fileInfos)));
+        Page<FileInfo> fileInfoPage = fileMapper.selectPage(new Page<>(page.getCurrentPage(), page.getPageSize()), null);
+        return Result.OK(new PageResponse<>(fileInfoPage));
     }
 
     /**
@@ -56,7 +58,7 @@ public class FileServiceImpl implements FileService {
         String originalFilename = file.getOriginalFilename();//完整文件名
         //根据文件类型对文件进行分类,以文件夹分类
         assert originalFilename != null;
-        String postfix = originalFilename.substring(file.getOriginalFilename().lastIndexOf(".")+1);//文件后缀类型
+        String postfix = originalFilename.substring(file.getOriginalFilename().lastIndexOf(".") + 1);//文件后缀类型
         //判断是否有当前类型的文件夹
         String savePath = basePath + "/" + postfix;
         File dir = new File(savePath);
@@ -82,6 +84,7 @@ public class FileServiceImpl implements FileService {
         fileMapper.insert(fileInfo);
         return Result.OK(save);
     }
+
     /**
      * 多文件上传
      */
@@ -107,9 +110,8 @@ public class FileServiceImpl implements FileService {
         if (!file.exists() || file.isDirectory()) {
             throw new FileException();
         }
-        try (FileInputStream fileInputStream = new FileInputStream(file);
-             ServletOutputStream outputStream = response.getOutputStream()) {
-//            response.setContentType("application/octet-stream");
+        try (FileInputStream fileInputStream = new FileInputStream(file); ServletOutputStream outputStream = response.getOutputStream()) {
+            //            response.setContentType("application/octet-stream");
             response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);//以文件形式返回浏览器,否则浏览器悔自动解析一些能打开的格式
             // 如果文件名为中文需要设置编码
             response.setHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(fileInfo.getName(), "utf8"));
@@ -117,7 +119,7 @@ public class FileServiceImpl implements FileService {
             response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
 
 
-            byte[] bytes = new byte[1024*8];
+            byte[] bytes = new byte[1024 * 8];
             int len;
             while ((len = fileInputStream.read(bytes)) != -1) {
                 outputStream.write(bytes, 0, len);
