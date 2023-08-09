@@ -1,5 +1,9 @@
 package com.superme.filemanager.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.superme.common.beans.PageRequest;
+import com.superme.common.beans.PageResponse;
 import com.superme.common.beans.Result;
 import com.superme.common.exceptions.FileException;
 import com.superme.common.utils.ParameterCheckUtil;
@@ -33,6 +37,17 @@ public class FileServiceImpl implements FileService {
     @Resource
     private FileMapper fileMapper;
     /**
+     * 查询文件列表
+     */
+    @Override
+    public Result<PageResponse<FileInfo>> getPage(PageRequest page) {
+        ParameterCheckUtil.checkPage(page);
+        PageHelper.startPage(page.getCurrentPage(), page.getPageSize());
+        List<FileInfo> fileInfos = fileMapper.selectList(null);
+        return Result.OK(new PageResponse<>(new PageInfo<>(fileInfos)));
+    }
+
+    /**
      * 单文件上传
      */
     @Override
@@ -40,6 +55,7 @@ public class FileServiceImpl implements FileService {
         ParameterCheckUtil.checkNull(file, "文件为空,请上传文件");
         String originalFilename = file.getOriginalFilename();//完整文件名
         //根据文件类型对文件进行分类,以文件夹分类
+        assert originalFilename != null;
         String postfix = originalFilename.substring(file.getOriginalFilename().lastIndexOf(".")+1);//文件后缀类型
         //判断是否有当前类型的文件夹
         String savePath = basePath + "/" + postfix;
@@ -109,4 +125,5 @@ public class FileServiceImpl implements FileService {
         }
         return Result.OK();
     }
+
 }

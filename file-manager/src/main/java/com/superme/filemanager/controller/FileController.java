@@ -1,13 +1,15 @@
 package com.superme.filemanager.controller;
 
+import com.superme.common.beans.PageRequest;
+import com.superme.common.beans.PageResponse;
 import com.superme.common.beans.Result;
+import com.superme.filemanager.pojo.Entity.FileInfo;
 import com.superme.filemanager.service.FileService;
 import com.superme.filemanager.utils.FileUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,16 +21,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 
 /**
- * FileController
+ * 文件管理前端控制器
  * 作者: yanruizhi
  * 时间: 2023/7/31 9:42
  */
@@ -38,6 +36,13 @@ public class FileController {
     @Resource
     private FileService fileService;
 
+    /**
+     * 查询文件列表
+     */
+    @PostMapping("getPage")
+    public Result<PageResponse<FileInfo>> getPage(PageRequest page) {
+        return fileService.getPage(page);
+    }
     /**
      * 单文件上传
      */
@@ -73,7 +78,6 @@ public class FileController {
      * @throws IOException
      * @throws ServletException
      */
-    @RequestMapping(value = "/upload/up", method = RequestMethod.POST)
     @ResponseBody
     public String readFile(HttpServletRequest request, @RequestParam("name") String name, @RequestPart("file1") MultipartFile file3, @RequestPart("photo") MultipartFile photo) throws IOException, ServletException {
 
@@ -119,38 +123,4 @@ public class FileController {
         return "success";
     }
 
-    @PostMapping("file")
-    public Result<Object> uploadFile(MultipartFile file) throws IOException {
-        String path = this.getClass().getClassLoader().getResource("").getPath();
-
-        File directory = new File(""); //实例化一个File对象。参数不同时，获取的最终结果也不同
-
-        String canonicalPath = directory.getCanonicalPath();//获取标准路径。该方法需要放置在try/catch块中，或声明抛出异常
-
-        byte[] bytes = file.getBytes();
-        String fileName = canonicalPath + file.getOriginalFilename();
-        System.out.println("fileName = " + fileName);
-        BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(new File(fileName)));
-        outputStream.write(bytes);
-        outputStream.close();
-        return Result.OK("文件上传成功");
-    }
-
-
-    @GetMapping("getDir")
-    public Result<Object> getDir() {
-        String path1 = this.getClass().getClassLoader().getResource("").getPath();
-        String path2 = System.getProperty("user.dir");//jar包所在目录
-        System.out.println(path1);
-        System.out.println(path2);
-        HashMap<String, Object> pathMap = new HashMap<>();
-        pathMap.put("path1", path1);
-        pathMap.put("path2", path2);
-        return Result.OK(pathMap);
-    }
-
-    @PostMapping("upload-a")
-    public Result<Object> upload(MultipartFile file) {
-        return Result.OK();
-    }
 }

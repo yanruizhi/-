@@ -1,6 +1,9 @@
 package com.superme.filemanager.service;
 
+import com.superme.common.beans.PageRequest;
+import com.superme.common.beans.PageResponse;
 import com.superme.common.beans.Result;
+import com.superme.filemanager.pojo.Entity.FileInfo;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -25,4 +28,8 @@ public interface FileService {
      * 下载文件
      */
     Result<Object> download(String id, HttpServletResponse response) throws IOException;
+    /**
+     * 查询文件列表
+     */
+    Result<PageResponse<FileInfo>> getPage(PageRequest page);
 }

@@ -1,9 +1,7 @@
 package com.superme.common.beans;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import lombok.AllArgsConstructor;
+import com.github.pagehelper.PageInfo;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
@@ -31,11 +29,12 @@ public class PageResponse<T> implements Serializable {
         this.totalCount = totalCount;
     }
 
-    public PageResponse(Page<T> page) {
-        this.list = page.getRecords();
-        this.currentPage = page.getCurrent();
+    public PageResponse(PageInfo<T> page) {
+        this.list = page.getList();
+        this.currentPage = page.getPageNum();
         this.pageSize = page.getSize();
         this.totalCount = page.getTotal();
-        this.totalPage = (page.getTotal() % page.getSize() == 0 ? page.getTotal() / page.getSize() : page.getTotal() / page.getSize() + 1);
+//        this.totalPage = (page.getTotal() % page.getSize() == 0 ? page.getTotal() / page.getSize() : page.getTotal() / page.getSize() + 1);
+        this.totalPage = page.getPages();
     }
 }
