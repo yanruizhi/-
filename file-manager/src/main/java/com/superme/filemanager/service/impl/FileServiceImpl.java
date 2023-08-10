@@ -11,7 +11,7 @@ import com.superme.common.exceptions.FileException;
 import com.superme.common.utils.ParameterCheckUtil;
 import com.superme.filemanager.mapper.FileMapper;
 import com.superme.filemanager.pojo.Entity.FileInfo;
-import com.superme.filemanager.service.FileService;
+import com.superme.filemanager.service.FilesService;
 import com.superme.filemanager.utils.FileUtil;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ import java.util.List;
  * 时间: 2023/8/7 10:24
  */
 @Service
-public class FileServiceImpl implements FileService {
+public class FileServiceImpl implements FilesService {
 
     private final String basePath = System.getProperty("user.dir") + "/file"; //jar包所在目录下新建文件夹file
 
@@ -108,7 +108,7 @@ public class FileServiceImpl implements FileService {
         ParameterCheckUtil.checkNull(url, "url信息为空,文件信息数据异常");
         File file = new File(url);
         if (!file.exists() || file.isDirectory()) {
-            throw new FileException();
+            throw new FileException("文件已被删除");
         }
         try (FileInputStream fileInputStream = new FileInputStream(file); ServletOutputStream outputStream = response.getOutputStream()) {
             //            response.setContentType("application/octet-stream");
@@ -117,7 +117,6 @@ public class FileServiceImpl implements FileService {
             response.setHeader("Content-Disposition", "attachment;fileName=" + URLEncoder.encode(fileInfo.getName(), "utf8"));
             // 返回前端文件名需要添加
             response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
-
 
             byte[] bytes = new byte[1024 * 8];
             int len;

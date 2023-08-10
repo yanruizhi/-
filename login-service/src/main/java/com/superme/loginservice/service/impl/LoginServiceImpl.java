@@ -1,17 +1,18 @@
 package com.superme.loginservice.service.impl;
 
-import ch.qos.logback.core.LogbackException;
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.superme.common.beans.Result;
 import com.superme.common.exceptions.LoginException;
+import com.superme.common.utils.IpUtil;
 import com.superme.common.utils.ParameterCheckUtil;
 import com.superme.loginservice.mapper.UserMapper;
 import com.superme.loginservice.pojo.Entity.User;
 import com.superme.loginservice.pojo.qo.LoginUser;
 import com.superme.loginservice.service.LoginService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
@@ -35,6 +36,7 @@ public class LoginServiceImpl implements LoginService {
     private DefaultKaptcha defaultKaptcha;
     @Resource
     private Jedis jedis;
+
 
     /**
      * 登录

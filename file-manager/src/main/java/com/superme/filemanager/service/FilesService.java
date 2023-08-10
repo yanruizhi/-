@@ -15,7 +15,7 @@ import java.util.List;
  * 作者: yanruizhi
  * 时间: 2023/8/7 10:23
  */
-public interface FileService {
+public interface FilesService {
     /**
      * 单文件上传
      */

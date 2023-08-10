@@ -3,8 +3,9 @@ package com.superme.filemanager.controller;
 import com.superme.common.beans.PageRequest;
 import com.superme.common.beans.PageResponse;
 import com.superme.common.beans.Result;
+import com.superme.common.utils.IpUtil;
 import com.superme.filemanager.pojo.Entity.FileInfo;
-import com.superme.filemanager.service.FileService;
+import com.superme.filemanager.service.FilesService;
 import com.superme.filemanager.utils.FileUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,8 +35,14 @@ import java.util.List;
 @RequestMapping("file")
 public class FileController {
     @Resource
-    private FileService fileService;
+    private FilesService fileService;
 
+    @RequestMapping("/getIp")
+    public String MethodName(HttpServletRequest request){
+        String ip = IpUtil.getIpAddress(request);
+        System.out.println("当前公网IP为: "+ip);
+        return ip;
+    }
     /**
      * 查询文件列表
      */
