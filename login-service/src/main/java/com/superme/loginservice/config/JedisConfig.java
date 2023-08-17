@@ -37,6 +37,8 @@ public class JedisConfig {
     public JedisPool jedisPool() {
         logger.info("JedisPool注入成功！！");
         logger.info("redis地址：" + host + ":" + port);
+        System.out.println("JedisPool注入成功！！");
+        System.out.println("redis地址：" + host + ":" + port);
 
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         jedisPoolConfig.setMaxIdle(maxIdle);

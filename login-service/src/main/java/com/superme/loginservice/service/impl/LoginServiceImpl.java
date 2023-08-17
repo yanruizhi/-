@@ -1,18 +1,21 @@
 package com.superme.loginservice.service.impl;
 
 import cn.dev33.satoken.stp.StpUtil;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.superme.common.beans.Result;
+import com.superme.common.enums.CommonEnum;
 import com.superme.common.exceptions.LoginException;
-import com.superme.common.utils.IpUtil;
+import com.superme.common.exceptions.ParameterException;
 import com.superme.common.utils.ParameterCheckUtil;
 import com.superme.loginservice.mapper.UserMapper;
 import com.superme.loginservice.pojo.Entity.User;
-import com.superme.loginservice.pojo.qo.LoginUser;
+import com.superme.loginservice.pojo.dto.LoginUserDto;
+import com.superme.loginservice.pojo.qo.LoginUserQo;
 import com.superme.loginservice.service.LoginService;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
@@ -22,6 +25,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * 描述: TODO
@@ -36,17 +41,25 @@ public class LoginServiceImpl implements LoginService {
     private DefaultKaptcha defaultKaptcha;
     @Resource
     private Jedis jedis;
+    @Resource
+    private RedisTemplate redisTemplate;
 
 
     /**
      * 登录
      */
     @Override
-    public Result<Object> login(LoginUser user) {
+    public Result<Object> login(LoginUserQo user) {
         //参数校验
         ParameterCheckUtil.checkNull(user, "登录信息为空");
         ParameterCheckUtil.checkNull(user.getUsername(), "用户名不能为空");
         ParameterCheckUtil.checkNull(user.getPassword(), "密码不能为空");
+        ParameterCheckUtil.checkNull(user.getVcode(), "验证码不能为空");
+        //校验验证码
+        Boolean exists = jedis.exists(user.getVcode());
+        if (!exists) {
+            throw new LoginException("验证码错误");
+        }
         //查询登录用户
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(User::getName, user.getUsername());
@@ -56,7 +69,15 @@ public class LoginServiceImpl implements LoginService {
             throw new LoginException("密码不正确");
         }
         StpUtil.login(userInfo.getId());
-        return Result.OK("登录成功", userInfo);
+        List<String> permissionList = StpUtil.getPermissionList(user.getUsername());//用户权限
+        List<String> roleList = StpUtil.getRoleList(user.getUsername());//用户角色
+        permissionList.removeAll(Collections.singleton(null));
+        roleList.removeAll(Collections.singleton(null));
+        String tokenValue = StpUtil.getTokenValue();
+        LoginUserDto loginUserDto = new LoginUserDto(userInfo.getName(), userInfo.getEmail(), userInfo.getPhone(), tokenValue, permissionList, roleList);
+
+        jedis.setex(tokenValue, 86400, JSON.toJSONString(loginUserDto));
+        return Result.OK("登录成功", loginUserDto);
     }
 
     @Override
@@ -74,8 +95,10 @@ public class LoginServiceImpl implements LoginService {
     public void verifyCode(HttpServletRequest request, HttpServletResponse response) {
         //生成验证码字符串
         String code = defaultKaptcha.createText();
+        jedis.setex(code, 300, code);
         //将验证码保存到session中
         request.getSession().setAttribute("verifyCode", code);
+
         //生成验证码图片
         BufferedImage image = defaultKaptcha.createImage(code);
         //设置响应头

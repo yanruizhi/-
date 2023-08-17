@@ -8,7 +8,7 @@ import lombok.Data;
  * 时间: 2023/7/18 16:51
  */
 @Data
-public class LoginUser {
+public class LoginUserQo {
     private String username;//用户名
     private String password;//密码
     private String vcode;//验证码

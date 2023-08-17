@@ -7,7 +7,7 @@ package com.superme.common.enums;
  */
 public enum FileEnum {
 
-    DIR_BASE(System.getProperty("user.dir")),
+    DIR_BASE(System.getProperty("user.dir")),//当前程序运行目录
 
     ;
 

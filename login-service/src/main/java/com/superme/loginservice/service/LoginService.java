@@ -1,8 +1,7 @@
 package com.superme.loginservice.service;
 
 import com.superme.common.beans.Result;
-import com.superme.loginservice.pojo.Entity.User;
-import com.superme.loginservice.pojo.qo.LoginUser;
+import com.superme.loginservice.pojo.qo.LoginUserQo;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +15,7 @@ public interface LoginService {
     /**
      * 登录
      */
-    Result<Object> login(LoginUser user);
+    Result<Object> login(LoginUserQo user);
 
     Long getUserIdByUsername(String username);
     /**

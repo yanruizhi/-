@@ -6,6 +6,8 @@ package com.superme.common.enums;
  * 时间: 2023/7/4 10:51
  */
 public class Constants {
+
+
     //跨域预检接口 (任何人都允许访问)
     public static final String[] CROSS_WHITELIST = {
             "/webjars/**",
