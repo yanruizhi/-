@@ -25,6 +25,17 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                </exclusion>
+<!--                <exclusion>-->
+<!--                    <groupId>org.springframework.boot</groupId>-->
+<!--                    <artifactId>spring-boot-starter-webflux</artifactId>-->
+<!--                </exclusion>-->
+            </exclusions>
+
         </dependency>
         <!--nacos服务发现依赖-->
         <dependency>
@@ -35,6 +46,18 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+        <!--        redis-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <!-- 导入jedis的包 -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <!--            g该版本SpringBoot默认jedis3.3.0-->
+            <!--高版本的jedis会与spring-boot-starter-data-redis出现版本不兼容问题,4.x以上不兼容springboot2.x-->
         </dependency>
     </dependencies>
 
