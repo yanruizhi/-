@@ -1,4 +1,4 @@
-package com.superme.loginservice.pojo.dto;
+package com.superme.common.pojo.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

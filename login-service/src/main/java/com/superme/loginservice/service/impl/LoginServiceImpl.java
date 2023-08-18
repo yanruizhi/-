@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.superme.common.beans.Result;
 import com.superme.common.enums.CommonEnum;
+import com.superme.common.enums.Constants;
 import com.superme.common.exceptions.LoginException;
 import com.superme.common.exceptions.ParameterException;
 import com.superme.common.utils.ParameterCheckUtil;
@@ -16,6 +17,7 @@ import com.superme.loginservice.pojo.qo.LoginUserQo;
 import com.superme.loginservice.service.LoginService;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
@@ -74,9 +76,9 @@ public class LoginServiceImpl implements LoginService {
         permissionList.removeAll(Collections.singleton(null));
         roleList.removeAll(Collections.singleton(null));
         String tokenValue = StpUtil.getTokenValue();
-        LoginUserDto loginUserDto = new LoginUserDto(userInfo.getName(), userInfo.getEmail(), userInfo.getPhone(), tokenValue, permissionList, roleList);
-
-        jedis.setex(tokenValue, 86400, JSON.toJSONString(loginUserDto));
+        LoginUserDto loginUserDto = new LoginUserDto(String.valueOf(userInfo.getId()), userInfo.getName(), userInfo.getEmail(), userInfo.getPhone(), tokenValue, permissionList, roleList);
+        //user信息存入redis缓存,过期时间1天
+        jedis.setex(tokenValue, Constants.TIME_ONE_DAY, JSON.toJSONString(loginUserDto));
         return Result.OK("登录成功", loginUserDto);
     }
 
@@ -112,6 +114,27 @@ public class LoginServiceImpl implements LoginService {
         } catch (IOException e) {
             e.printStackTrace();
             throw new LoginException("生成验证码异常");
+        }
+
+    }
+    /**
+     * 登出
+     */
+    @Override
+    public Result<Object> logout(HttpServletRequest request, HttpServletResponse response) {
+        String token = request.getHeader("token");
+        if (ObjectUtils.isEmpty(token)) {
+            throw new LoginException("token信息不存在");
+        }
+        Boolean exists = jedis.exists(token);
+        Long flag = 0L;
+        if (exists) {
+            flag = jedis.del(token);
+        }
+        if (flag > 0) {
+            return Result.OK("登出成功");
+        } else {
+            throw new LoginException("登出异常");
         }
 
     }

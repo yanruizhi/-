@@ -22,4 +22,11 @@ public interface LoginService {
      * 生成验证码
      */
     void verifyCode(HttpServletRequest request, HttpServletResponse response);
+
+    /**
+     * 登出
+     */
+    Result<Object> logout(HttpServletRequest request, HttpServletResponse response);
+
+
 }

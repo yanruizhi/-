@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -41,13 +40,13 @@ public class LoginController {
        return loginService.login(user);
     }
 
-    @Resource
-    private Jedis jedis;
+    /**
+     * 登出
+     */
+    @PostMapping("logout")
+    public Result<Object> logout(HttpServletRequest request, HttpServletResponse response) {
 
-    @GetMapping("testJedis")
-    public String test(String str) {
-        String test = jedis.set(str, "测试jedis");
-        return test;
+        return loginService.logout(request, response);
     }
 
 }

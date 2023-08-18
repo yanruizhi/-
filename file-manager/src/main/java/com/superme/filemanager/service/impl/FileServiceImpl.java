@@ -9,6 +9,7 @@ import com.superme.common.beans.PageResponse;
 import com.superme.common.beans.Result;
 import com.superme.common.exceptions.FileException;
 import com.superme.common.utils.ParameterCheckUtil;
+import com.superme.filemanager.config.RequestUserInfo;
 import com.superme.filemanager.mapper.FileMapper;
 import com.superme.filemanager.pojo.Entity.FileInfo;
 import com.superme.filemanager.service.FilesService;
@@ -35,7 +36,8 @@ import java.util.List;
 public class FileServiceImpl implements FilesService {
 
     private final String basePath = System.getProperty("user.dir") + "/file"; //jar包所在目录下新建文件夹file
-
+    @Resource
+    private RequestUserInfo userInfo;
     @Resource
     private FileMapper fileMapper;
 
@@ -45,7 +47,10 @@ public class FileServiceImpl implements FilesService {
     @Override
     public Result<PageResponse<FileInfo>> getPage(PageRequest page) {
         ParameterCheckUtil.checkPage(page);
-        Page<FileInfo> fileInfoPage = fileMapper.selectPage(new Page<>(page.getCurrentPage(), page.getPageSize()), null);
+        String userId = userInfo.getUserInfo().getUserId();
+        LambdaQueryWrapper<FileInfo> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(FileInfo::getUserId, userId);
+        Page<FileInfo> fileInfoPage = fileMapper.selectPage(new Page<>(page.getCurrentPage(), page.getPageSize()), queryWrapper);
         return Result.OK(new PageResponse<>(fileInfoPage));
     }
 
@@ -80,7 +85,7 @@ public class FileServiceImpl implements FilesService {
         fileInfo.setUrl(dir + "/" + originalFilename);
         fileInfo.setSize(file.getSize());
         fileInfo.setDescription(description);
-        fileInfo.setUserId(null);
+        fileInfo.setUserId(userInfo.getUserId());
         fileMapper.insert(fileInfo);
         return Result.OK(save);
     }
@@ -102,7 +107,10 @@ public class FileServiceImpl implements FilesService {
     public Result<Object> download(String id, HttpServletResponse response) throws IOException {
         ParameterCheckUtil.checkNull(id, "文件id不能为空");
         //查询文件信息
-        FileInfo fileInfo = fileMapper.selectById(id);
+        LambdaQueryWrapper<FileInfo> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(FileInfo::getUserId, userInfo.getUserId());
+        queryWrapper.eq(FileInfo::getId, id);
+        FileInfo fileInfo = fileMapper.selectOne(queryWrapper);
         ParameterCheckUtil.checkNull(fileInfo, "文件信息不存在,请刷新后再试");
         String url = fileInfo.getUrl();
         ParameterCheckUtil.checkNull(url, "url信息为空,文件信息数据异常");
