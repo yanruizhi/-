@@ -32,4 +32,9 @@ public interface FilesService {
      * 查询文件列表
      */
     Result<PageResponse<FileInfo>> getPage(PageRequest page);
+    /**
+     * 分享文件
+     * @param fileInfoList 文件列表
+     */
+    Result<Object> shareFile(List<FileInfo> fileInfoList);
 }

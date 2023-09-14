@@ -32,20 +32,7 @@ public class LoginFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         //网关拦截
-//        ServerHttpRequest request = exchange.getRequest();
-//        boolean token = request.getHeaders().containsKey("token");
-//        if (!token) {
-//            throw new Exception("用户未登录,请先登录!!!");
-//        }
-//        List<String> list = request.getHeaders().get("token");
-//        if (list == null || list.size() == 0) {
-//            throw new RuntimeException("token信息不存在");
-//        }
-//        Boolean exists = jedis.exists(list.get(0));
-//        if (!exists) {
-////            return Result.error("登录信息已过期,请重新登录");
-//            throw new RuntimeException("登录信息已过期,请重新登录");
-//        }
+
 
         return chain.filter(exchange);
     }

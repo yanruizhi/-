@@ -2,8 +2,6 @@ package com.superme.filemanager.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.superme.common.beans.PageRequest;
 import com.superme.common.beans.PageResponse;
 import com.superme.common.beans.Result;
@@ -40,6 +38,15 @@ public class FileServiceImpl implements FilesService {
     private RequestUserInfo userInfo;
     @Resource
     private FileMapper fileMapper;
+    /**
+     * 分享文件
+     * @param fileInfoList 文件列表
+     */
+    @Override
+    public Result<Object> shareFile(List<FileInfo> fileInfoList) {
+        // TODO
+        return null;
+    }
 
     /**
      * 查询文件列表
@@ -116,7 +123,7 @@ public class FileServiceImpl implements FilesService {
         ParameterCheckUtil.checkNull(url, "url信息为空,文件信息数据异常");
         File file = new File(url);
         if (!file.exists() || file.isDirectory()) {
-            throw new FileException("文件已被删除");
+            throw new FileException("文件不存在,请刷新后再试");
         }
         try (FileInputStream fileInputStream = new FileInputStream(file); ServletOutputStream outputStream = response.getOutputStream()) {
             //            response.setContentType("application/octet-stream");
