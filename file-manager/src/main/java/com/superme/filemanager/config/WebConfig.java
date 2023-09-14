@@ -34,5 +34,8 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
 
         registry.addInterceptor(loginInterceptor);//添加登录拦截器,过滤未登录用户
+
     }
+
+
 }
