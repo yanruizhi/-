@@ -2,9 +2,9 @@ package com.superme.gateway.filter;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.superme.gateway.beans.CustomConfiguration;
 import com.superme.gateway.utils.IpUtil;
 import lombok.SneakyThrows;
-import org.apache.http.HttpStatus;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -23,7 +23,6 @@ import redis.clients.jedis.Jedis;
 
 
 import javax.annotation.Resource;
-import javax.security.auth.login.LoginException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,9 +36,12 @@ public class LoginFilter implements GlobalFilter, Ordered {
 
     @Resource
     private Jedis jedis;
+
     private static final String AUTHORIZE_TOKEN = "token";
 
     private static AntPathMatcher matcher = new AntPathMatcher();
+
+
 
     @SneakyThrows
     @Override
@@ -68,8 +70,7 @@ public class LoginFilter implements GlobalFilter, Ordered {
     public static Mono<Void> loginResponse(ServerWebExchange exchange) {
         JSONObject resultJson = new JSONObject();
         resultJson.put("code", 401);
-        resultJson.put("message", "请重新登陆授权");
-        resultJson.put("status", 401);
+        resultJson.put("message", "登录信息过期,请重新登录");
         ServerHttpResponse response = exchange.getResponse();
         byte[] bytes = JSONObject.toJSONBytes(resultJson);
         response.getHeaders().add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
@@ -78,11 +79,19 @@ public class LoginFilter implements GlobalFilter, Ordered {
     }
 
 
-    public static boolean needLogin(String uri){
+    @Resource
+    public CustomConfiguration configuration;
+
+    public  boolean needLogin(String uri){
         // 登录认证白名单
         List<String> uriList = new ArrayList<>();
-        uriList.add("/login/doLogin");
-        uriList.add("/login/verifyCode");
+        System.out.println("routingWhitelist = " + configuration.getWhitelist());
+        //        uriList = Arrays.asList(whitelist);
+        //TODO 放入配置文件中读取
+        uriList.add("/login/doLogin");//登录
+        uriList.add("/login/verifyCode");//获取验证码
+
+//        System.out.println(whitelist);
 
         for (String pattern : uriList) {
             if (matcher.match(pattern, uri)) {
