@@ -8,7 +8,6 @@ import lombok.SneakyThrows;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
-
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -21,10 +20,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import redis.clients.jedis.Jedis;
 
-
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 /**
  * 登录过滤器
@@ -84,22 +81,9 @@ public class LoginFilter implements GlobalFilter, Ordered {
 
     public  boolean needLogin(String uri){
         // 登录认证白名单
-        List<String> uriList = new ArrayList<>();
-        System.out.println("routingWhitelist = " + configuration.getWhitelist());
-        //        uriList = Arrays.asList(whitelist);
-        //TODO 放入配置文件中读取
-        uriList.add("/login/doLogin");//登录
-        uriList.add("/login/verifyCode");//获取验证码
+        Set<String> uriList = configuration.getWhitelist();
+        return uriList.contains(uri);
 
-//        System.out.println(whitelist);
-
-        for (String pattern : uriList) {
-            if (matcher.match(pattern, uri)) {
-                // 不需要拦截
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override

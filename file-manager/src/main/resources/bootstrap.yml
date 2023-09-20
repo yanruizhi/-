@@ -1,6 +1,8 @@
 # 应用服务 WEB 访问端口
 server:
   port: 10012
+  servlet:
+    context-path: /file-manager
 spring:
   application:
     name: file-manager

@@ -23,8 +23,9 @@ public class Constants {
     };
     //web拦截白名单
     public static final String[] WHITE_LIST = {
-            "/login/verifyCode",
+            "/login-service/login/verifyCode",
             "/login/doLogin"
+
     };
     public static final String TOKEN = "token";    //用户登录状态请求头名称
     public static final Integer TIME_ONE_DAY = 86400; //一天的秒数

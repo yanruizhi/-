@@ -1,7 +1,6 @@
 package com.superme.filemanager.config;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,10 +8,9 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+@Slf4j
 @Configuration
 public class JedisConfig {
-    Logger logger = LogManager.getLogger(RedisConfig.class);
-
 
     @Value("${spring.redis.host}")
     private String host;
@@ -35,10 +33,8 @@ public class JedisConfig {
 
     @Bean
     public JedisPool jedisPool() {
-        logger.info("JedisPool注入成功！！");
-        logger.info("redis地址：" + host + ":" + port);
-        System.out.println("JedisPool注入成功！！");
-        System.out.println("redis地址：" + host + ":" + port);
+        log.info("JedisPool注入成功！！");
+        log.info("redis地址：" + host + ":" + port);
 
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         jedisPoolConfig.setMaxIdle(maxIdle);
