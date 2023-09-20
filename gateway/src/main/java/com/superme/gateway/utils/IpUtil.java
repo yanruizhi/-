@@ -19,44 +19,6 @@ import java.util.Objects;
  */
 @Slf4j
 public class IpUtil {
- /*   public static void getIpAddress(ServerHttpRequest request) {
-
-        HttpHeaders headers = request.getHeaders();
-        //        InetAddress address = request.getRemoteAddress().getAddress();
-        //        InetSocketAddress remoteAddress = request.getRemoteAddress();
-
-        List<String> list = headers.get("x-forwarded-for");
-
-        String ip = "";
-        if (!ObjectUtils.isEmpty(list) && list.size() > 0) {
-            ip = list.get(0);
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = Objects.requireNonNull(headers.get("Proxy-Client-IP")).get(0);
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = Objects.requireNonNull(headers.get("WL-Proxy-Client-IP")).get(0);
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = Objects.requireNonNull(headers.get("HTTP_CLIENT_IP")).get(0);
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = Objects.requireNonNull(headers.get("HTTP_X_FORWARDED_FOR")).get(0);
-        }
-        //        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-        //            ip =request.getRemoteAddress().;
-        //        }
-        // 获取到多个ip时取第一个作为客户端真实ip
-        if (!ObjectUtils.isEmpty(ip) && ip.contains(",")) {
-            String[] ipArray = ip.split(",");
-            if (ArrayUtils.isNotEmpty(ipArray)) {
-                ip = ipArray[0];
-            }
-        }
-
-        log.info("来访时间: [{}], 来访主机ip: [{}]", DateUtil.parseDate(new Date()), ip);
-    }*/
-
 
     // 多次反向代理后会有多个ip值 的分割符
     private final static String IP_UTILS_FLAG = ",";
