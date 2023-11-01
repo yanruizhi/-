@@ -1,6 +1,5 @@
 package com.superme.filemanager.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.Directory;
@@ -16,16 +15,13 @@ import com.superme.filemanager.pojo.Entity.TMedia;
 import com.superme.filemanager.service.MediaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.util.unit.DataUnit;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * 描述: 照片服务实现类
