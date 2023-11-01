@@ -29,6 +29,8 @@
         <spring.cloud.version>Hoxton.SR9</spring.cloud.version>
         <fastjson.version>1.2.50</fastjson.version>
         <pagehelper.version>1.4.6</pagehelper.version>
+        <hutool.version>5.8.22</hutool.version>
+        <metadata-extractor.version>2.18.0</metadata-extractor.version>
     </properties>
 
     <dependencies>
@@ -55,6 +57,14 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-bom</artifactId>
+                <version>${hutool.version}</version>
+                <type>pom</type>
+                <!-- 注意这里是import -->
+                <scope>import</scope>
+            </dependency>
             <!-- 解决mybatis plus分页插件报错问题 -->
             <dependency>
                 <groupId>com.baomidou</groupId>

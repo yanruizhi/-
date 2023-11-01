@@ -6,7 +6,7 @@ import com.superme.common.beans.PageRequest;
 import com.superme.common.beans.PageResponse;
 import com.superme.common.beans.Result;
 import com.superme.common.exceptions.FileException;
-import com.superme.common.utils.ParameterCheckUtil;
+import com.superme.common.util.ParameterCheckUtil;
 import com.superme.filemanager.config.RequestUserInfo;
 import com.superme.filemanager.mapper.FileMapper;
 import com.superme.filemanager.pojo.Entity.FileInfo;

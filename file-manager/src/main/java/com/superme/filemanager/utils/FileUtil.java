@@ -1,11 +1,9 @@
 package com.superme.filemanager.utils;
 
 import com.superme.common.exceptions.FileException;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileOutputStream;
 
 /**

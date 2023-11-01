@@ -6,7 +6,7 @@ import com.superme.common.beans.PageRequest;
 import com.superme.common.beans.PageResponse;
 import com.superme.common.beans.Result;
 import com.superme.common.exceptions.ParameterException;
-import com.superme.common.utils.ParameterCheckUtil;
+import com.superme.common.util.ParameterCheckUtil;
 import com.superme.loginservice.mapper.RoleMapper;
 import com.superme.loginservice.pojo.Entity.Role;
 import com.superme.loginservice.service.RoleService;

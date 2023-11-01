@@ -1,4 +1,4 @@
-package com.superme.common.utils;
+package com.superme.common.util;
 
 
 import com.superme.common.beans.PageRequest;

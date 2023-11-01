@@ -1,4 +1,4 @@
-package com.superme.common.utils;
+package com.superme.common.util;
 
 import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
 import org.springframework.util.ObjectUtils;

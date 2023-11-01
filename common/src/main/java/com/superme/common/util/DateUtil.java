@@ -1,10 +1,13 @@
-package com.superme.common.utils;
+package com.superme.common.util;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.ObjectUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Date;
 
 /**
@@ -18,6 +21,8 @@ public class DateUtil {
     public static final DateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public static final DateFormat formatter3 = new SimpleDateFormat("yyyyMMdd");
     public static final DateFormat formatter4 = new SimpleDateFormat("yyyyMMddHHmmss");
+    public static final DateFormat formatter5 = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
+    public static final DateTimeFormatter formatter6 = DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm:ss");
     public static final String yyyyMMddHHmmss1 = "yyyy-MM-dd HH:mm:ss";
     public static final String yyyyMMddHHmmss2 = "yyyyMMddHHmmss";
 
@@ -33,6 +38,10 @@ public class DateUtil {
             return null;
         }
         return formatter2.format(date);
+    }
+
+    public static LocalDateTime getLocalDateTime(String timeStr) {
+        return LocalDateTime.parse(timeStr,formatter6);
     }
 
 }
