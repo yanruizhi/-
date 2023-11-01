@@ -51,19 +51,21 @@ public class MediaServiceImpl implements MediaService {
             tMedia = new TMedia();
             File file = null;
             Metadata metadata = null;
+            String suffix = null;
             File directory = new File(DirectoryEnum.USER_DIR.getName() + "\\" + DirectoryEnum.PHOTOS.getName());
             try {
                 String originalFilename = multipartFile.getOriginalFilename();
                 String[] filename = originalFilename.split("\\.");
+                suffix = filename[1];
                 tMedia.setMediaName(filename[0]);//名称
 
                 if (filename[1] != null) {
-                    tMedia.setMediaSuffix(filename[1]);//后缀
-                    if (Arrays.asList(Constant.PICTURE_TYPE).contains(filename[1])) {
+                    tMedia.setMediaSuffix(suffix);//后缀
+                    if (Arrays.asList(Constant.PICTURE_TYPE).contains(suffix)) {
                         tMedia.setMediaType("1");
-                    } else if (Arrays.asList(Constant.VIDEO_TYPE).contains(filename[1])) {
+                    } else if (Arrays.asList(Constant.VIDEO_TYPE).contains(suffix)) {
                         tMedia.setMediaType("2");
-                    } else if (Arrays.asList(Constant.AUDIO_TYPE).contains(filename[1])) {
+                    } else if (Arrays.asList(Constant.AUDIO_TYPE).contains(suffix)) {
                         tMedia.setMediaType("3");
                     } else {
                         tMedia.setMediaType("4");
@@ -92,26 +94,53 @@ public class MediaServiceImpl implements MediaService {
                     String tagName = tag.getTagName();  //标签名
                     String desc = tag.getDescription(); //标签信息
                     System.out.println(tagName + "===" + desc);//照片信息
-                    switch (tagName) {
-                        case "Date/Time Original" :
-                            tMedia.setShootingTime(DateUtil.getLocalDateTime(desc));
-                            break;
-                        case "GPS Latitude":
-                            tMedia.setLatitude(desc);//经度
-                            break;
-                        case "GPS Longitude":
-                            tMedia.setLongitude(desc);//纬度
-                            break;
-                        case "GPS Altitude":
-                            tMedia.setAltitude(desc.split(" ")[0]);//海拔
-                            break;
-                        case "File Size":
-                            tMedia.setSize(Long.valueOf(desc.split(" ")[0]));//文件大小
-                            break;
-                        default:
-                            break;
+                    if (suffix != null) {
+                        if (Arrays.asList(Constant.PICTURE_TYPE).contains(suffix)) {
+                            //处理图片
+                            switch (tagName) {
+                                case "Date/Time Original" :
+                                    tMedia.setShootingTime(DateUtil.getLocalDateTime(desc));
+                                    break;
+                                case "GPS Latitude":
+                                    tMedia.setLatitude(desc);//经度
+                                    break;
+                                case "GPS Longitude":
+                                    tMedia.setLongitude(desc);//纬度
+                                    break;
+                                case "GPS Altitude":
+                                    tMedia.setAltitude(desc.split(" ")[0]);//海拔
+                                    break;
+                                case "File Size":
+                                    tMedia.setSize(Long.valueOf(desc.split(" ")[0]));//文件大小
+                                    break;
+                                default:
+                                    break;
 
+                            }
+                        } else if (Arrays.asList(Constant.VIDEO_TYPE).contains(suffix)) {
+                            //处理视频
+                            switch (tagName) {
+                                case "Creation Time" :
+                                    //有两个拍摄时间,这里取一个
+                                    if (tMedia.getShootingTime() == null) {
+                                        tMedia.setShootingTime(DateUtil.getLocalDateTimeByCST(desc));//拍摄时间
+                                    }
+                                    break;
+                                case "File Size":
+                                    tMedia.setSize(Long.valueOf(desc.split(" ")[0]));//文件大小
+                                    break;
+                                case "Duration in Seconds":
+                                    tMedia.setDurationTime(desc);
+                                    break;
+                                default:
+                                    break;
+
+                            }
+                        } else if (Arrays.asList(Constant.AUDIO_TYPE).contains(suffix)) {
+                            //处理音频
+                        }
                     }
+
                 }
             }
             mediaMapper.insert(tMedia);

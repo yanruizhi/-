@@ -68,5 +68,9 @@ public class TMedia{
      */
     @TableField(value = "size")
     private Long size;
+    /**
+     * 视频时长/音频时长,
+     */
+    private String durationTime;
 
 }
