@@ -6,7 +6,6 @@ import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.Tag;
-import com.superme.common.beans.Result;
 import com.superme.common.exceptions.ParameterException;
 import com.superme.filemanager.enums.DirectoryEnum;
 import com.superme.filemanager.service.MediaService;

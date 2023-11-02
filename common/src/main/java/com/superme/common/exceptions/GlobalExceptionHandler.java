@@ -31,6 +31,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public Result handleException(Exception e, HttpServletRequest request) {
+
         log.error("url {}, msg {}", request.getRequestURL(), e);
         return Result.error( e.getMessage());
     }

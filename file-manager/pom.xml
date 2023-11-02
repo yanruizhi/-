@@ -17,9 +17,14 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
     <dependencies>
+        <!--七牛云-->
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>${qiniu.version}</version>
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.drewnoakes/metadata-extractor -->
-        <!--照片详细信息框架-->
         <!--照片详细信息框架-->
         <dependency>
             <groupId>com.drewnoakes</groupId>
