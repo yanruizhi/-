@@ -25,7 +25,3 @@ spring:
 #        shared-configs:
 #          - dataId: data-source-config.yml
 #            group: myApp
-  servlet:
-    multipart:
-      max-file-size: 1024MB
-      max-request-size: 1024MB
