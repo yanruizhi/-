@@ -51,10 +51,12 @@ public class MediaServiceImpl implements MediaService {
             File directory = new File(DirectoryEnum.USER_DIR.getName() + "\\" + DirectoryEnum.PHOTOS.getName());
             try {
                 String originalFilename = multipartFile.getOriginalFilename();
-                String[] filename = originalFilename.split("\\.");
+                String[] filename = new String[0];
+                if (originalFilename != null) {
+                    filename = originalFilename.split("\\.");
+                }
                 suffix = filename[1];
                 tMedia.setMediaName(filename[0]);//名称
-
                 if (filename[1] != null) {
                     tMedia.setMediaSuffix(suffix);//后缀
                     if (Arrays.asList(Constant.PICTURE_TYPE).contains(suffix)) {
@@ -67,19 +69,20 @@ public class MediaServiceImpl implements MediaService {
                         tMedia.setMediaType("4");
                     }
                 }
-
                 file = File.createTempFile(filename[0], "."+filename[1], directory);
                 multipartFile.transferTo(file);
                 //jvm退出时删除零时文件
                 file.deleteOnExit();
             } catch (IOException e) {
-                e.printStackTrace();
+                log.info("生成媒资文件异常");
             }
             //读取媒资信息
             try {
-                metadata = ImageMetadataReader.readMetadata(file);
+                if (file != null) {
+                    metadata = ImageMetadataReader.readMetadata(file);
+                }
             } catch (ImageProcessingException | IOException e) {
-                e.printStackTrace();
+                log.info("读取媒资信息异常");
             }
             if (metadata == null) {
                 throw new ParameterException("系统异常");
@@ -134,6 +137,7 @@ public class MediaServiceImpl implements MediaService {
                             }
                         } else if (Arrays.asList(Constant.AUDIO_TYPE).contains(suffix)) {
                             //处理音频
+                            System.out.println("处理音频");
                         }
                     }
 

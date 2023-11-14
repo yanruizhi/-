@@ -1,0 +1,32 @@
+# 应用服务 WEB 访问端口
+server:
+  port: 10013
+  servlet:
+    context-path: /manager-content
+spring:
+  application:
+    name: manager-content
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.100.128:8848
+        cluster-name: 合肥
+        #开发环境的区别
+        namespace: ab3be6d5-2946-4a24-af84-be6dc2bc5ffe
+        #区分统一环境下的不同项目组
+        group: myApp
+      config:
+        server-addr: 192.168.100.128:8848
+        cluster-name: 合肥
+        namespace: ab3be6d5-2946-4a24-af84-be6dc2bc5ffe
+        group: myApp
+        file-extension: yml
+        #添加公共配置内容
+#        shared-configs:
+#          - dataId: data-source-config.yaml
+#            group: myApp
+        #添加扩展配置内容
+#        extension-configs:
+#          - dataId: data-source-config.yaml
+#            group: myApp
+#            refresh: true
