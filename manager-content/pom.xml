@@ -17,7 +17,12 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
     <dependencies>
-
+        <!--  百度云OCR文字识别Java-SDK依赖      -->
+        <dependency>
+            <groupId>com.baidu.aip</groupId>
+            <artifactId>java-sdk</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>com.superme</groupId>
             <artifactId>common</artifactId>

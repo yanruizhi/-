@@ -11,6 +11,7 @@
         <module>file-manager</module>
         <module>gateway</module>
         <module>login-service</module>
+        <module>manager-content</module>
     </modules>
     <name>personal-data</name>
 
@@ -32,6 +33,7 @@
         <hutool.version>5.8.22</hutool.version>
         <metadata-extractor.version>2.18.0</metadata-extractor.version>
         <qiniu.version>7.12.1</qiniu.version>
+        <baidu.orc.version>4.16.14</baidu.orc.version>
     </properties>
 
     <dependencies>
@@ -58,6 +60,12 @@
 
     <dependencyManagement>
         <dependencies>
+            <!--  百度云OCR文字识别Java-SDK依赖      -->
+            <dependency>
+                <groupId>com.baidu.aip</groupId>
+                <artifactId>java-sdk</artifactId>
+                <version>${baidu.orc.version}</version>
+            </dependency>
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-bom</artifactId>
