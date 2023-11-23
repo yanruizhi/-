@@ -1,9 +1,7 @@
-package com.superme.content.config;
+package com.superme.common.ocr.config;
 
-import com.baidu.aip.ocr.AipOcr;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,8 +26,4 @@ public class BaiduOcrConfig {
      */
     private String secretKey;
 
-    @Bean
-    public AipOcr getAipOcr() {
-        return new AipOcr(appId, apiKey, secretKey);
-    }
 }

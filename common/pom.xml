@@ -16,6 +16,12 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
     <dependencies>
+        <!--  百度云OCR文字识别Java-SDK依赖      -->
+        <dependency>
+            <groupId>com.baidu.aip</groupId>
+            <artifactId>java-sdk</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <!--照片详细信息框架-->
         <dependency>
             <groupId>com.drewnoakes</groupId>
