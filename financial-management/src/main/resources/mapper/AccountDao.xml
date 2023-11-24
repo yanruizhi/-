@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.superme.financial.dao.LedgerDao">
+<mapper namespace="com.superme.financial.dao.AccountDao">
 
-    <resultMap type="com.superme.financial.entity.Ledger" id="LedgerMap">
+    <resultMap type="com.superme.financial.entity.Account" id="AccountMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="ledgerId" column="ledger_id" jdbcType="INTEGER"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
         <result property="createUserId" column="create_user_id" jdbcType="INTEGER"/>

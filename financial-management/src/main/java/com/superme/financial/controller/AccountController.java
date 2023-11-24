@@ -1,10 +1,11 @@
 package com.superme.financial.controller;
 
+import com.superme.common.beans.PageRequest;
+import com.superme.common.beans.PageResponse;
+import com.superme.common.beans.Result;
 import com.superme.financial.entity.Account;
 import com.superme.financial.service.AccountService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -32,8 +33,8 @@ public class AccountController {
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<Page<Account>> queryByPage(Account account, PageRequest pageRequest) {
-        return ResponseEntity.ok(this.accountService.queryByPage(account, pageRequest));
+    public Result<PageResponse<Account>> queryByPage(Account account, PageRequest pageRequest) {
+        return Result.OK(accountService.queryByPage(account, pageRequest));
     }
 
     /**
@@ -43,8 +44,8 @@ public class AccountController {
      * @return 单条数据
      */
     @GetMapping("{id}")
-    public ResponseEntity<Account> queryById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(this.accountService.queryById(id));
+    public Result<Account> queryById(@PathVariable("id") Integer id) {
+        return Result.OK(accountService.queryById(id));
     }
 
     /**
@@ -54,8 +55,8 @@ public class AccountController {
      * @return 新增结果
      */
     @PostMapping
-    public ResponseEntity<Account> add(Account account) {
-        return ResponseEntity.ok(this.accountService.insert(account));
+    public Result<Account> add(Account account) {
+        return Result.OK(accountService.insert(account));
     }
 
     /**
@@ -65,8 +66,8 @@ public class AccountController {
      * @return 编辑结果
      */
     @PutMapping
-    public ResponseEntity<Account> edit(Account account) {
-        return ResponseEntity.ok(this.accountService.update(account));
+    public Result<Account> edit(Account account) {
+        return Result.OK(accountService.update(account));
     }
 
     /**
@@ -76,8 +77,8 @@ public class AccountController {
      * @return 删除是否成功
      */
     @DeleteMapping
-    public ResponseEntity<Boolean> deleteById(Integer id) {
-        return ResponseEntity.ok(this.accountService.deleteById(id));
+    public Result<Boolean> deleteById(String id) {
+        return Result.OK(accountService.deleteById(id));
     }
 
 }

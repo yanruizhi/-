@@ -1,7 +1,7 @@
 package com.superme.financial.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.superme.common.beans.PageRequest;
+import com.superme.common.beans.PageResponse;
 import com.superme.financial.entity.Account;
 
 
@@ -28,7 +28,7 @@ public interface AccountService {
      * @param pageRequest      分页对象
      * @return 查询结果
      */
-    Page<Account> queryByPage(Account account, PageRequest pageRequest);
+    PageResponse<Account> queryByPage(Account account, PageRequest pageRequest);
 
     /**
      * 新增数据
@@ -52,6 +52,6 @@ public interface AccountService {
      * @param id 主键
      * @return 是否成功
      */
-    boolean deleteById(Integer id);
+    boolean deleteById(String id);
 
 }

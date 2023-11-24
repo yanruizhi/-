@@ -1,10 +1,12 @@
 package com.superme.financial.controller;
 
+import com.superme.common.beans.PageRequest;
+import com.superme.common.beans.PageResponse;
+import com.superme.common.beans.Result;
 import com.superme.financial.entity.Ledger;
 import com.superme.financial.service.LedgerService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.ResponseEntity;
+
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -32,8 +34,8 @@ public class LedgerController {
      * @return 查询结果
      */
     @GetMapping
-    public ResponseEntity<Page<Ledger>> queryByPage(Ledger ledger, PageRequest pageRequest) {
-        return ResponseEntity.ok(this.ledgerService.queryByPage(ledger, pageRequest));
+    public Result<PageResponse<Ledger>> queryByPage(Ledger ledger, PageRequest pageRequest) {
+        return Result.OK(ledgerService.queryByPage(ledger, pageRequest));
     }
 
     /**
@@ -43,8 +45,8 @@ public class LedgerController {
      * @return 单条数据
      */
     @GetMapping("{id}")
-    public ResponseEntity<Ledger> queryById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(this.ledgerService.queryById(id));
+    public Result<Ledger> queryById(@PathVariable("id") Integer id) {
+        return Result.OK(ledgerService.queryById(id));
     }
 
     /**
@@ -54,8 +56,8 @@ public class LedgerController {
      * @return 新增结果
      */
     @PostMapping
-    public ResponseEntity<Ledger> add(Ledger ledger) {
-        return ResponseEntity.ok(this.ledgerService.insert(ledger));
+    public Result<Ledger> add(Ledger ledger) {
+        return Result.OK(ledgerService.insert(ledger));
     }
 
     /**
@@ -65,8 +67,8 @@ public class LedgerController {
      * @return 编辑结果
      */
     @PutMapping
-    public ResponseEntity<Ledger> edit(Ledger ledger) {
-        return ResponseEntity.ok(this.ledgerService.update(ledger));
+    public Result<Ledger> edit(Ledger ledger) {
+        return Result.OK(ledgerService.update(ledger));
     }
 
     /**
@@ -76,8 +78,8 @@ public class LedgerController {
      * @return 删除是否成功
      */
     @DeleteMapping
-    public ResponseEntity<Boolean> deleteById(Integer id) {
-        return ResponseEntity.ok(this.ledgerService.deleteById(id));
+    public Result<Boolean> deleteById(Integer id) {
+        return Result.OK(ledgerService.deleteById(id));
     }
 
 }

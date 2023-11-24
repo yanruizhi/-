@@ -1,14 +1,14 @@
 package com.superme.financial.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.superme.common.beans.PageRequest;
+import com.superme.common.beans.PageResponse;
 import com.superme.financial.dao.AccountDao;
 import com.superme.financial.entity.Account;
 import com.superme.financial.service.AccountService;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
-
 
 import javax.annotation.Resource;
 
@@ -31,7 +31,7 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     public Account queryById(Integer id) {
-        return this.accountDao.queryById(id);
+        return accountDao.selectById(id);
     }
 
     /**
@@ -42,9 +42,10 @@ public class AccountServiceImpl implements AccountService {
      * @return 查询结果
      */
     @Override
-    public Page<Account> queryByPage(Account account, PageRequest pageRequest) {
-        long total = this.accountDao.count(account);
-        return new PageImpl<>(this.accountDao.queryAllByLimit(account, pageRequest), pageRequest, total);
+    public PageResponse<Account> queryByPage(Account account, PageRequest pageRequest) {
+        LambdaQueryWrapper<Account> queryWrapper = new LambdaQueryWrapper<>();
+        Page<Account> accountPage = accountDao.selectPage(new Page<>(pageRequest.getCurrentPage(), pageRequest.getPageSize()), queryWrapper);
+        return new PageResponse<>(accountPage);
     }
 
     /**
@@ -67,8 +68,14 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     public Account update(Account account) {
-        this.accountDao.update(account);
-        return this.queryById(account.getId());
+        if (account.getId() == null) {
+        throw new RuntimeException("id不能为空");
+        }
+        if (this.queryById(account.getId()) == null) {
+        throw new RuntimeException("数据不存在");
+        }
+        accountDao.updateById(account);
+        return accountDao.selectById(account.getId());
     }
 
     /**
@@ -78,7 +85,8 @@ public class AccountServiceImpl implements AccountService {
      * @return 是否成功
      */
     @Override
-    public boolean deleteById(Integer id) {
+    public boolean deleteById(String id) {
+
         return this.accountDao.deleteById(id) > 0;
     }
 }

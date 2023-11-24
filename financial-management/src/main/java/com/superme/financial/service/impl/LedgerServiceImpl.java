@@ -1,12 +1,15 @@
 package com.superme.financial.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.superme.common.beans.PageRequest;
+import com.superme.common.beans.PageResponse;
+import com.superme.common.beans.Result;
 import com.superme.financial.entity.Ledger;
 import com.superme.financial.dao.LedgerDao;
 import com.superme.financial.service.LedgerService;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
+
 
 import javax.annotation.Resource;
 
@@ -29,7 +32,7 @@ public class LedgerServiceImpl implements LedgerService {
      */
     @Override
     public Ledger queryById(Integer id) {
-        return this.ledgerDao.queryById(id);
+        return ledgerDao.selectById(id);
     }
 
     /**
@@ -40,9 +43,11 @@ public class LedgerServiceImpl implements LedgerService {
      * @return 查询结果
      */
     @Override
-    public Page<Ledger> queryByPage(Ledger ledger, PageRequest pageRequest) {
-        long total = this.ledgerDao.count(ledger);
-        return new PageImpl<>(this.ledgerDao.queryAllByLimit(ledger, pageRequest), pageRequest, total);
+    public PageResponse<Ledger> queryByPage(Ledger ledger, PageRequest pageRequest) {
+        LambdaQueryWrapper<Ledger> queryWrapper = new LambdaQueryWrapper<>();
+        Page<Ledger> ledgerPage = ledgerDao.selectPage(new Page<>(pageRequest.getCurrentPage(), pageRequest.getPageSize()), queryWrapper);
+
+        return new PageResponse<>(ledgerPage);
     }
 
     /**
@@ -53,7 +58,7 @@ public class LedgerServiceImpl implements LedgerService {
      */
     @Override
     public Ledger insert(Ledger ledger) {
-        this.ledgerDao.insert(ledger);
+        ledgerDao.insert(ledger);
         return ledger;
     }
 
@@ -65,8 +70,15 @@ public class LedgerServiceImpl implements LedgerService {
      */
     @Override
     public Ledger update(Ledger ledger) {
-        this.ledgerDao.update(ledger);
-        return this.queryById(ledger.getId());
+        if (ledger.getId() == null) {
+            throw new RuntimeException("id 不能为空");
+        }
+        if (ledgerDao.selectById(ledger.getId()) == null) {
+            throw new RuntimeException("数据不存在");
+        }
+        ledgerDao.updateById(ledger);
+
+        return ledgerDao.selectById(ledger.getId());
     }
 
     /**
@@ -77,6 +89,6 @@ public class LedgerServiceImpl implements LedgerService {
      */
     @Override
     public boolean deleteById(Integer id) {
-        return this.ledgerDao.deleteById(id) > 0;
+        return ledgerDao.deleteById(id) > 0;
     }
 }

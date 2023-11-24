@@ -1,8 +1,10 @@
 package com.superme.financial.service;
 
+import com.superme.common.beans.PageRequest;
+import com.superme.common.beans.PageResponse;
+import com.superme.common.beans.Result;
 import com.superme.financial.entity.Ledger;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+
 
 /**
  * 账本信息表(Ledger)表服务接口
@@ -27,7 +29,7 @@ public interface LedgerService {
      * @param pageRequest      分页对象
      * @return 查询结果
      */
-    Page<Ledger> queryByPage(Ledger ledger, PageRequest pageRequest);
+    PageResponse<Ledger> queryByPage(Ledger ledger, PageRequest pageRequest);
 
     /**
      * 新增数据
