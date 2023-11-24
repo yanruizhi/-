@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.superme.financial.dao.LedgerDao">
+
+    <resultMap type="com.superme.financial.entity.Ledger" id="LedgerMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="createUserId" column="create_user_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="LedgerMap">
+        select
+idtypecreate_timeupdate_timecreate_user_id
+        from ledger
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="LedgerMap">
+        select
+idtypecreate_timeupdate_timecreate_user_id
+        from ledger
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="createUserId != null">
+                and create_user_id = #{createUserId}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from ledger
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="createUserId != null">
+                and create_user_id = #{createUserId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into ledger(typecreate_timeupdate_timecreate_user_id)
+        values (#{type}#{createTime}#{updateTime}#{createUserId})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into ledger(typecreate_timeupdate_timecreate_user_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.type}#{entity.createTime}#{entity.updateTime}#{entity.createUserId})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into ledger(typecreate_timeupdate_timecreate_user_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.type}#{entity.createTime}#{entity.updateTime}#{entity.createUserId})
+        </foreach>
+        on duplicate key update
+type = values(type)create_time = values(create_time)update_time = values(update_time)create_user_id = values(create_user_id)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ledger
+        <set>
+            <if test="type != null and type != ''">
+                type = #{type},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="createUserId != null">
+                create_user_id = #{createUserId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ledger where id = #{id}
+    </delete>
+
+</mapper>
+

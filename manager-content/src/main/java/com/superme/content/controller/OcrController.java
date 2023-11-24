@@ -19,6 +19,11 @@ public class OcrController {
     @Resource
     private OcrService ocrService;
 
+    /**
+     * 图片文本识别
+     * @param file 图片喂鸡
+     * @return 识别结果
+     */
     @RequestMapping("/scanPlainText")
     public String scanPlainText(MultipartFile file) {
         return ocrService.scanPlainText(file);

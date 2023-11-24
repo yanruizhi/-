@@ -52,7 +52,6 @@ public class BaiduOcrImpl extends OrcUtlsAbs {
         }
         try {
             jsonObject = aipOcr.basicAccurateGeneral(imageFile.getBytes(), options);
-            //            jsonObject = ocrUtils.basicAccurateGeneral(file.getBytes(), options);
         } catch (IOException e) {
             log.info("扫描普通文本: 文本识别异常");
             log.error("errorInfo:{}", e.getMessage());
