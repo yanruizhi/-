@@ -33,7 +33,7 @@ public class LedgerController {
      * @param pageRequest      分页对象
      * @return 查询结果
      */
-    @GetMapping
+    @PostMapping("getPage")
     public Result<PageResponse<Ledger>> queryByPage(Ledger ledger, PageRequest pageRequest) {
         return Result.OK(ledgerService.queryByPage(ledger, pageRequest));
     }
@@ -55,7 +55,7 @@ public class LedgerController {
      * @param ledger 实体
      * @return 新增结果
      */
-    @PostMapping
+    @PostMapping("add")
     public Result<Ledger> add(Ledger ledger) {
         return Result.OK(ledgerService.insert(ledger));
     }
@@ -66,7 +66,7 @@ public class LedgerController {
      * @param ledger 实体
      * @return 编辑结果
      */
-    @PutMapping
+    @PostMapping("update")
     public Result<Ledger> edit(Ledger ledger) {
         return Result.OK(ledgerService.update(ledger));
     }
@@ -77,7 +77,7 @@ public class LedgerController {
      * @param id 主键
      * @return 删除是否成功
      */
-    @DeleteMapping
+    @PostMapping("deleteById")
     public Result<Boolean> deleteById(Integer id) {
         return Result.OK(ledgerService.deleteById(id));
     }

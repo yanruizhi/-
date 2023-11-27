@@ -32,7 +32,7 @@ public class AccountController {
      * @param pageRequest      分页对象
      * @return 查询结果
      */
-    @GetMapping
+    @PostMapping("getPage")
     public Result<PageResponse<Account>> queryByPage(Account account, PageRequest pageRequest) {
         return Result.OK(accountService.queryByPage(account, pageRequest));
     }
@@ -54,7 +54,7 @@ public class AccountController {
      * @param account 实体
      * @return 新增结果
      */
-    @PostMapping
+    @PostMapping("add")
     public Result<Account> add(Account account) {
         return Result.OK(accountService.insert(account));
     }
@@ -65,7 +65,7 @@ public class AccountController {
      * @param account 实体
      * @return 编辑结果
      */
-    @PutMapping
+    @PostMapping("update")
     public Result<Account> edit(Account account) {
         return Result.OK(accountService.update(account));
     }
@@ -76,7 +76,7 @@ public class AccountController {
      * @param id 主键
      * @return 删除是否成功
      */
-    @DeleteMapping
+    @PostMapping("deleteById")
     public Result<Boolean> deleteById(String id) {
         return Result.OK(accountService.deleteById(id));
     }

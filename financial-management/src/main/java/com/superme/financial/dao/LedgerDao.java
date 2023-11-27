@@ -2,6 +2,7 @@ package com.superme.financial.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.superme.financial.entity.Ledger;
+import org.apache.ibatis.annotations.Mapper;
 
 
 /**
@@ -10,6 +11,7 @@ import com.superme.financial.entity.Ledger;
  * @author makejava
  * @since 2023-11-24 17:08:03
  */
+@Mapper
 public interface LedgerDao extends BaseMapper<Ledger> {
 
 

@@ -30,3 +30,5 @@ spring:
 #          - dataId: data-source-config.yaml
 #            group: myApp
 #            refresh: true
+logging:
+  config: classpath:logback-spring.xml

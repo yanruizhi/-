@@ -1,11 +1,11 @@
 # 应用服务 WEB 访问端口
 server:
-  port: 10012
+  port: 10014
   servlet:
-    context-path: /file-manager
+    context-path: /financial-management
 spring:
   application:
-    name: file-manager
+    name: financial-management
   cloud:
     nacos:
       discovery:
