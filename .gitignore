@@ -34,6 +34,6 @@ build/
 ### VS Code ###
 .vscode/
 
-/personal-data/log/
-/personal-data/file/
-!**/src/main/resources/reble.xml
+/log
+/file
+reble.xml
