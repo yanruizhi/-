@@ -35,4 +35,5 @@ build/
 .vscode/
 
 /personal-data/log/
+/personal-data/file/
 !**/src/main/resources/reble.xml
