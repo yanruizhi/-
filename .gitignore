@@ -38,3 +38,4 @@ build/
 /file
 **/reble.xml
 **/src/main/resources/reble.xml
+manager-content/src/main/resources/rebel.xml
