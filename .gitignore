@@ -37,3 +37,4 @@ build/
 /log
 /file
 reble.xml
+**/src/main/resources/reble.xml
