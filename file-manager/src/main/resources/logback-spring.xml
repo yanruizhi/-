@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <property name="savePath" value="log"/>
-    <property name="dirName" value="manager-content"/>
+    <property name="dirName" value="file-manager"/>
     <logger name="com.alibaba.nacos.client.config.impl.ClientWorker" level="WARN"/>
     <!--输出到控制台-->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">

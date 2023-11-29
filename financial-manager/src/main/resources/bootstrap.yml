@@ -2,10 +2,10 @@
 server:
   port: 10014
   servlet:
-    context-path: /financial-management
+    context-path: /financial-manager
 spring:
   application:
-    name: financial-management
+    name: financial-manager
   cloud:
     nacos:
       discovery:

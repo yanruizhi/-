@@ -12,7 +12,7 @@
         <module>gateway</module>
         <module>login-service</module>
         <module>manager-content</module>
-        <module>financial-management</module>
+        <module>financial-manager</module>
     </modules>
     <name>personal-data</name>
 
@@ -58,6 +58,13 @@
                 <groupId>com.baidu.aip</groupId>
                 <artifactId>java-sdk</artifactId>
                 <version>${baidu.orc.version}</version>
+                <!--            排除slf4j-->
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-simple</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>cn.hutool</groupId>
