@@ -21,7 +21,7 @@ public class OcrController {
 
     /**
      * 图片文本识别
-     * @param file 图片喂鸡
+     * @param file 图片文件
      * @return 识别结果
      */
     @RequestMapping("/scanPlainText")
