@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <property name="savePath" value="log"/>
-    <property name="dirName" value="login-service"/>
+    <!--    读取配置文件中的信息-->
+    <springProperty name="savePath" source="logging.savePath"/>
+    <!--以下是自定义变量-->
+    <!--    <Property name="savePath" value="logging.savePath"/>-->
     <logger name="com.alibaba.nacos.client.config.impl.ClientWorker" level="WARN"/>
 
     <!--输出到控制台-->
@@ -21,7 +23,7 @@
         </filter>
         <append>true</append>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${savePath}/${dirName}/error_log/%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${savePath}/error_log/%d{yyyy-MM-dd}.%i.log</fileNamePattern>
 <!--            最大文件大小-->
             <maxFileSize>10MB</maxFileSize>
 <!--            保存天数-->
@@ -44,7 +46,7 @@
         </filter>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${savePath}/${dirName}/info_log/%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${savePath}/info_log/%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <maxFileSize>10MB</maxFileSize>
             <MaxHistory>60</MaxHistory>
             <totalSizeCap>2GB</totalSizeCap>

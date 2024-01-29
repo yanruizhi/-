@@ -41,7 +41,6 @@ public class TestController {
 
     @PostMapping("excel/read")
     public void readExcel(MultipartFile excelFile) throws IOException {
-        //        ExcelReader reader = ExcelUtil.getReader((File) excelFile);
         ExcelReader reader1 = ExcelUtil.getReader(excelFile.getInputStream());
         List<List<Object>> read = reader1.read();
 

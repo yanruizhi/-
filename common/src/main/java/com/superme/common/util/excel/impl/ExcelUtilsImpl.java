@@ -46,7 +46,7 @@ public class ExcelUtilsImpl implements ExcelUtils {
 
         //response为HttpServletResponse对象
         response.setContentType("application/vnd.ms-excel;charset=utf-8");
-        fileName = URLEncoder.encode(fileName, "UTF-8");//.replaceAll("\\+", "%20");
+        fileName = URLEncoder.encode(fileName, "UTF-8");
         response.setHeader("Content-Type", "application/xlsx");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
         //out为OutputStream，需要写出到的目标流
