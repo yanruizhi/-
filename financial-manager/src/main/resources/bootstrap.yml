@@ -25,3 +25,5 @@ spring:
 #        shared-configs:
 #          - dataId: data-source-config.yml
 #            group: myApp
+logging:
+  savePath: log/${spring.application.name}
