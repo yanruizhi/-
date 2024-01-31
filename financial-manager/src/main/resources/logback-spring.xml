@@ -2,7 +2,7 @@
 <configuration>
     <!--先读取配置文件中的信息-->
     <springProperty name="path" source="logging.savePath"/>
-    <!--再讲读取的信息作为自定义变量使用-->
+    <!--再读取的信息作为自定义变量使用-->
     <Property name="savePath" value="${path}"/>
 
     <logger name="com.alibaba.nacos.client.config.impl.ClientWorker" level="WARN"/>

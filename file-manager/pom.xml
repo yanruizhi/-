@@ -6,16 +6,19 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>file-manager</name>
     <description>file-manager</description>
+
     <parent>
         <artifactId>personal-data</artifactId>
         <groupId>com.superme</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
+
     <dependencies>
         <!--七牛云-->
         <dependency>
@@ -37,6 +40,7 @@
             <artifactId>common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
         <!-- 解决mybatis plus分页插件报错问题 -->
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -55,23 +59,6 @@
             <!--高版本的jedis会与spring-boot-starter-data-redis出现版本不兼容问题,4.x以上不兼容springboot2.x-->
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-simple</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!--分页插件-->
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>${pagehelper.version}</version>
-        </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -98,6 +85,7 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
+
     </dependencies>
 
     <build>
