@@ -20,6 +20,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.superme</groupId>
+            <artifactId>common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <!--七牛云-->
         <dependency>
             <groupId>com.qiniu</groupId>
@@ -58,6 +63,7 @@
             <!--            g该版本SpringBoot默认jedis3.3.0-->
             <!--高版本的jedis会与spring-boot-starter-data-redis出现版本不兼容问题,4.x以上不兼容springboot2.x-->
         </dependency>
+
 
         <dependency>
             <groupId>com.baomidou</groupId>
