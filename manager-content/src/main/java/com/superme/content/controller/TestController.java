@@ -4,6 +4,7 @@ import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.superme.common.util.excel.ExcelUtils;
 import com.superme.content.entity.Dog;
+import com.xxl.job.core.handler.annotation.XxlJob;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,12 @@ public class TestController {
 
     @Resource
     private ExcelUtils excelUtils;
+
+    @XxlJob(value = "test")
+    public void test() {
+        log.info("-----------测试------------");
+
+    }
 
     @RequestMapping("log")
     public void log(String msg) {

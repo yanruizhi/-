@@ -2,7 +2,7 @@
 <configuration>
     <Property name="savePath" value="log"/>
     <Property name="applicationName" value="file-manager"/>
-
+    <!--设置指定类显示的日志等级-->
     <logger name="com.alibaba.nacos.client.config.impl.ClientWorker" level="WARN"/>
     <!--输出到控制台-->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
