@@ -11,7 +11,7 @@ import com.superme.common.util.DateUtil;
 import com.superme.common.util.ParameterCheckUtil;
 import com.superme.filemanager.enums.DirectoryEnum;
 import com.superme.filemanager.mapper.MediaMapper;
-import com.superme.filemanager.pojo.Entity.TMedia;
+import com.superme.filemanager.pojo.entity.TMedia;
 import com.superme.filemanager.service.MediaService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

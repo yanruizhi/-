@@ -70,6 +70,11 @@
 
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
         <!-- 打包插件 -->
         <plugins>
             <plugin>

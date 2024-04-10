@@ -1,4 +1,4 @@
-package com.superme.filemanager.pojo.Entity;
+package com.superme.filemanager.pojo.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

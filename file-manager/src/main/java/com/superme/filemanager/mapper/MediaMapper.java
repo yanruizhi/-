@@ -1,7 +1,7 @@
 package com.superme.filemanager.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.superme.filemanager.pojo.Entity.TMedia;
+import com.superme.filemanager.pojo.entity.TMedia;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

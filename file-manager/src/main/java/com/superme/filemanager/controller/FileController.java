@@ -4,7 +4,7 @@ import com.superme.common.beans.PageRequest;
 import com.superme.common.beans.PageResponse;
 import com.superme.common.beans.Result;
 import com.superme.common.util.IpUtil;
-import com.superme.filemanager.pojo.Entity.FileInfo;
+import com.superme.filemanager.pojo.entity.FileInfo;
 import com.superme.filemanager.service.FilesService;
 import com.superme.filemanager.utils.FileUtil;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -9,6 +9,7 @@ public enum DirectoryEnum {
     //当前程序运行目录
     USER_DIR(System.getProperty("user.dir")),
     PHOTOS("photos"),
+    SAVE_DATA("saveData"),
     ;
 
     private String name;

@@ -3,7 +3,7 @@ package com.superme.filemanager.service;
 import com.superme.common.beans.PageRequest;
 import com.superme.common.beans.PageResponse;
 import com.superme.common.beans.Result;
-import com.superme.filemanager.pojo.Entity.FileInfo;
+import com.superme.filemanager.pojo.entity.FileInfo;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;

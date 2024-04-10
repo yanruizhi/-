@@ -19,7 +19,7 @@ public class AllExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public Result<Object> handleException(Exception e) {
-        return Result.error("未知异常,请联系管理员");
+        return Result.error(e.getMessage());
     }
 
     @Value("${spring.servlet.multipart.max-file-size}")
