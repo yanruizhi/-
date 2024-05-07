@@ -25,3 +25,11 @@ spring:
 #        shared-configs:
 #          - dataId: data-source-config.yml
 #            group: myApp
+jodconverter:
+  local:
+    enabled: true
+    office-home: C:/Program Files/LibreOffice # libreOffice根目录(安装libreOffice的目录)
+    task-execution-timeout: 60000 # 任务执行的超时时间
+    task-queue-timeout: 60000 # 任务队列的超时时间
+    port-numbers: 1998 # 端口（线程）
+    process-timeout: 60000 # 一个进程的超时时间

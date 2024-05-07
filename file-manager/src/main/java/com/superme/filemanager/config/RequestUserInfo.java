@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -57,6 +58,10 @@ public class RequestUserInfo {
         return userInfo.getUserId();
     }
 
-
+    //test 手动登录
+    @PostConstruct
+    public void doToken() {
+        jedis.set("admin_login", "123456");
+    }
 
 }

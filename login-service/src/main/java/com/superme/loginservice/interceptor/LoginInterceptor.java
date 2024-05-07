@@ -25,7 +25,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         //校检是否登录
         String token = request.getHeader("token");
-        if (token == null || token.equals("")) {
+        if (token == null || token.isEmpty()) {
             throw new LoginException("请先登录");
         }
         Boolean exists = jedis.exists(token);

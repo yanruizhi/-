@@ -20,6 +20,32 @@
     </properties>
 
     <dependencies>
+<!--        <dependency>-->
+<!--            <groupId>com.aspose</groupId>-->
+<!--            <artifactId>aspose-words</artifactId>-->
+<!--            <version>18.8</version>-->
+<!--        </dependency>-->
+<!--        -->
+        <!-- docx 模板填入与导出doc -->
+        <dependency>
+            <groupId>com.deepoove</groupId>
+            <artifactId>poi-tl</artifactId>
+            <version>1.5.0</version>
+        </dependency>
+
+        <!-- libreoffice 进行文件转换 -->
+        <dependency>
+            <groupId>org.jodconverter</groupId>
+            <artifactId>jodconverter-spring-boot-starter</artifactId>
+            <version>4.4.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jodconverter</groupId>
+            <artifactId>jodconverter-local</artifactId>
+            <version>4.4.4</version>
+        </dependency>
+
+<!--        -->
         <dependency>
             <groupId>com.superme</groupId>
             <artifactId>common</artifactId>
@@ -98,6 +124,14 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                    <include>**/*.properties</include>
+                    <include>**/*.yml</include>
+                </includes>
             </resource>
         </resources>
         <!-- 打包插件 -->

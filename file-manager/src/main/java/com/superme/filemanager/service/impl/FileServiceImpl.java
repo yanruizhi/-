@@ -14,6 +14,7 @@ import com.superme.filemanager.service.FilesService;
 import com.superme.filemanager.utils.FileUtil;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -65,6 +66,7 @@ public class FileServiceImpl implements FilesService {
      * 单文件上传
      */
     @Override
+    @Transactional
     public Result<Object> uploadSingle(MultipartFile file, String description) {
         ParameterCheckUtil.checkNull(file, "文件为空,请上传文件");
         String originalFilename = file.getOriginalFilename();//完整文件名

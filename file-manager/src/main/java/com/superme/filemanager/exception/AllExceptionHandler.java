@@ -1,6 +1,7 @@
 package com.superme.filemanager.exception;
 
 import com.superme.common.beans.Result;
+import com.superme.common.exceptions.FileException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,6 +23,12 @@ public class AllExceptionHandler {
         return Result.error(e.getMessage());
     }
 
+    @ExceptionHandler(FileException.class)
+    public Result<Object> handleFileException(FileException e) {
+        return Result.error(e.getMessage());
+    }
+
+
     @Value("${spring.servlet.multipart.max-file-size}")
     private String maxFileSize;
 
@@ -31,7 +38,7 @@ public class AllExceptionHandler {
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public Result<Object> handleException(MaxUploadSizeExceededException e) {
         log.info("上传文件大小超过限制,最大文件不超过{}; 每批次最大文件不超过{}; ", maxFileSize, maxRequestSize);
-        log.info("错误信息: {}",e.getMessage());
+        log.info("错误信息: {}", e.getMessage());
         return Result.error("上传文件大小超过限制,最大文件不超过" + maxFileSize + "; 每批次最大文件不超过" + maxRequestSize);
     }
 }

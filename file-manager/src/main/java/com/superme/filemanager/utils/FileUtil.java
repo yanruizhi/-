@@ -21,15 +21,15 @@ public class FileUtil {
     /**
      * 保存文件到服务器
      * @param file 要文件
-     * @param path 路径
+     * @param DirectoryPath 文件夹
      * @return 服务器上文件地址
      */
-    public static String save(MultipartFile file, String path) {
+    public static String save(MultipartFile file, String DirectoryPath) {
         BufferedOutputStream bufferedOutputStream = null;
         if (!file.isEmpty()) {
             try {
                 byte[] bytes = file.getBytes();
-                bufferedOutputStream = new BufferedOutputStream(Files.newOutputStream(Paths.get(path + "/" + file.getOriginalFilename())));
+                bufferedOutputStream = new BufferedOutputStream(Files.newOutputStream(Paths.get(DirectoryPath + "/" + file.getOriginalFilename())));
                 bufferedOutputStream.write(bytes);
                 bufferedOutputStream.close();
                 return file.getOriginalFilename() + " ---> success upload";
@@ -37,7 +37,7 @@ public class FileUtil {
                 if (e.getMessage().startsWith("Maximum")) {
                     throw new FileException("文件过大,单文件最大100MB");
                 } else {
-                    throw new FileException();
+                    throw new FileException(e.getMessage());
                 }
 
             }

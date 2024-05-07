@@ -50,10 +50,9 @@ public class SaveDataInfoServiceImpl implements SaveDataInfoService {
         info.setGameName(saveDataInfo.getGameName());
         info.setDescription(saveDataInfo.getDescription());
         info.setType(saveDataInfo.getType());
-        if (StringUtils.isNotBlank(saveDataInfo.getGameName())) {
-            info.setSuffix(saveDataInfo.getGameName().substring(saveDataInfo.getGameName().lastIndexOf(".") + 1));
-        }
+
         if (StringUtils.isNotBlank(saveDataInfo.getFile().getOriginalFilename())) {
+            info.setSuffix(saveDataInfo.getFile().getOriginalFilename().substring(saveDataInfo.getGameName().lastIndexOf(".") + 1));
             log.info("开始上传文件,文件名: {}", saveDataInfo.getFile().getOriginalFilename());
             String filePath = FileUtil.save(saveDataInfo.getFile(), DirectoryEnum.SAVE_DATA.getName());
             log.info("上传成功 {}", filePath);
